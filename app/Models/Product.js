@@ -2,18 +2,33 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
+
 const User = use('App/Models/User')
 const Category = use('App/Models/Category')
+const Inventory = use('App/Models/Inventory')
 
 class Product extends Model {
 
-    user () {
-        return this.belongsTo(User)
+  static getValidationRules () {
+    const rules = {
+      name: 'required',
+      description: 'required',
+      expiration_date: 'date'
     }
+    return rules
+  }
 
-    categories () {
-        return this.hasMany(Category)
-    }
+  inventories () {
+    return this.belongsToMany(Inventory, 'product_id', 'inventory_id').pivotTable('inventory_product')
+  }
+
+  user () {
+    return this.belongsTo(User)
+  }
+
+  category () {
+    return this.belongsToMany(Category).pivotTable('product_category')
+  }
 
 }
 

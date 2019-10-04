@@ -7,6 +7,16 @@ const Model = use('Model')
 const Hash = use('Hash')
 
 class User extends Model {
+
+  static getValidationRules () {
+    const rules = {
+      name: 'required',
+      email: 'required|email',
+      password: 'required|min:6'
+    }
+    return rules
+  }
+
   static boot () {
     super.boot()
 
@@ -33,6 +43,14 @@ class User extends Model {
    */
   tokens () {
     return this.hasMany('App/Models/Token')
+  }
+
+  products () {
+    return this.hasMany('App/Models/Product')
+  }
+
+  inventories () {
+    return this.hasMany('App/Models/Inventory')
   }
 }
 
