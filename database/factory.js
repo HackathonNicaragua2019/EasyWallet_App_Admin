@@ -1,5 +1,7 @@
 'use strict'
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Factory
@@ -12,10 +14,36 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-// const Factory = use('Factory')
+const Factory = use('Factory')
+const Hash = use('Hash')
 
-// Factory.blueprint('App/Models/User', (faker) => {
-//   return {
-//     username: faker.username()
-//   }
-// })
+Factory.blueprint('App/Models/User', async (faker) => {
+  return {
+    username: faker.username(),
+    email: faker.email(),
+    password: await Hash.make('default123')
+  }
+})
+
+Factory.blueprint('App/Models/Category', (faker) => {
+    return {
+        name: faker.first(),
+        description: faker.sentence()
+    }
+})
+
+Factory.blueprint('App/Models/Product', (faker) => {
+    return {
+        name: faker.syllable(),
+        description: faker.sentence(),
+        expiration_date: faker.date()
+    }
+})
+
+Factory.blueprint('App/Models/Inventory', (faker) => {
+    return {
+        name: faker.first(),
+        description: faker.sentence(),
+        user_id: 1
+    }
+})

@@ -5,16 +5,18 @@ const Schema = use('Schema')
 
 class ProductCategorySchema extends Schema {
   up () {
-    this.create('product_categories', (table) => {
+    this.create('product_category', (table) => {
       // Relationships
-      table.integer('category_id').unsigned().references('id').inTable('categories')
-      table.integer('product_id').unsigned().references('id').inTable('products')
+      table.integer('category_id').unsigned().index('category_id')
+      table.foreign('category_id').references('id').inTable('categories').onDelete('cascade')
+      table.integer('product_id').unsigned().index('product_id')
+      table.foreign('product_id').references('id').inTable('products').onDelete('cascade')
       table.timestamps()
     })
   }
 
   down () {
-    this.drop('product_categories')
+    this.drop('product_category')
   }
 }
 
