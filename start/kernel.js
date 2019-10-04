@@ -36,7 +36,8 @@ const globalMiddleware = [
 */
 const namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
-  guest: 'Adonis/Middleware/AllowGuestOnly'
+  guest: 'Adonis/Middleware/AllowGuestOnly',
+  owner: 'App/Middleware/OwnerDetector'
 }
 
 /*
@@ -51,7 +52,8 @@ const namedMiddleware = {
 */
 const serverMiddleware = [
   // 'Adonis/Middleware/Static',
-  'Adonis/Middleware/Cors'
+  'Adonis/Middleware/Cors',
+  // 'App/Middleware/OwnerDetector'
 ]
 
 Server
