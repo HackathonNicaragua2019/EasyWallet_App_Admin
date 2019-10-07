@@ -14,9 +14,11 @@ class ProductController {
   }
 
   async show ({ response, params }) {
-    const product = await Product.findOrFail(params.productId)
-    const categories = await product.category().select('name').fetch()
-    response.status(200).send({ product: product, categories: categories })
+    const product = await Product.query()
+      .with('categories')
+      .with('inventories')
+      .where('id' , params.productId).fetch()
+    response.status(200).send({ product: product })
   }
 
   async store ({ response, request, auth }) {
@@ -33,7 +35,7 @@ class ProductController {
     response.status(201).send(product)
   }
 
-  async update ({ response, request, auth, params }) {
+  async update ({ response, request, params }) {
     await Validator.validateData(request.all(), Product.getValidationRules())
     if (!Validator.isValidated()) {
       return response.status(422).send(Validator.getValidationMessage())
@@ -46,11 +48,26 @@ class ProductController {
     response.status(201).send(product)
   }
 
-  async delete ({ response, request, params, auth }) {
-    
+  async delete ({ response, params }) {
    const product = await Product.find(params.productId)
    await product.delete()
     response.status(204).send('Destroyed')
+  }
+
+  async searchByName ({ response, request }) {
+    let productName = request.input('productName')
+    console.log(productName)
+    if (productName) {
+      // Search product by name, matching possibilities
+      let products = await Product.query().whereRaw(`name like '${productName}%'`).fetch()
+      products = products.toJSON()
+      if (products.length > 0) {
+        response.status(200).send(products)
+      }
+      else {
+        response.status(404).send()
+      }
+    }
   }
 
 }

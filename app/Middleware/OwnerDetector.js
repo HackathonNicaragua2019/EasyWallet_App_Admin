@@ -48,6 +48,17 @@ class OwnerDetector {
   async handle ({ auth, response, request, params }, next) {
     try {
       const user = await auth.getUser()
+      if (params.username){      
+        console.log(user.username)
+        if (params.username != user.username) {
+          response.status(404).send('You are not owner')
+        }
+        else {
+          await next()
+        }
+        
+      }
+      
       if (params.inventoryId) {
         
         if (await this.isInventoryOwner(user, params.inventoryId)) {
@@ -57,6 +68,7 @@ class OwnerDetector {
           response.status(404).send('You are not owner')
         }
       }
+      
       if (params.productId) {
         if (await this.isProductOwner(user, params.productId)) {
           await next()

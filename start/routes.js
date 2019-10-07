@@ -48,6 +48,14 @@ Route.group(() => {
   Route.post('/inventory', 'InventoryController.store')
   // Assing Product to inventory
   Route.post('/inventory/:inventoryId/product/:productId', 'InventoryController.addProduct').middleware('owner')
+  // Update existing product in inventory
+  Route.put('/inventory/:inventoryId/product/:producctId', 'InventoryController.updateProduct').middleware('owner')
+
+  // Searching routes
+
+  // Search product
+  Route.post('/search/product/', 'ProductController.searchByName')
+  
 
 
-}).prefix('/user').middleware('auth')
+}).prefix('/:username').middleware('auth', 'owner')

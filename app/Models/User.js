@@ -8,6 +8,14 @@ const Hash = use('Hash')
 
 class User extends Model {
 
+  static getLoginValidationRules() {
+    const rules = {
+      email: 'required',
+      password: 'required'
+      
+    }
+    return rules
+  }
   static getValidationRules () {
     const rules = {
       name: 'required',

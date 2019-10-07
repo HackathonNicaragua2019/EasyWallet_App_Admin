@@ -5,7 +5,7 @@ const Model = use('Model')
 
 const User = use('App/Models/User')
 const Category = use('App/Models/Category')
-const Inventory = use('App/Models/Inventory')
+// const Inventory = use('App/Models/Inventory')
 
 class Product extends Model {
 
@@ -19,7 +19,7 @@ class Product extends Model {
   }
 
   inventories () {
-    return this.belongsToMany(Inventory, 'product_id', 'inventory_id').pivotTable('inventory_product')
+    return this.belongsToMany('App/Models/Inventory').pivotTable('inventory_product')
   }
 
   user () {

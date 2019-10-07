@@ -9,16 +9,13 @@ const Validator = use('App/Helpers/Validator')
 class InventoryController {
 
   async index ({ response, auth }) {
-    const inventories = auth.user.inventories().fetch()
+    const inventories = await Inventory.query().where('user_id', auth.user.id).fetch()
     response.status(200).send(inventories)
   }
 
   async show ({ response, auth, params }) {
-    const inventory = await Inventory.findOrFail(params.inventoryId)
-    console.log(inventory.products())
-    const products = await inventory.products().fetch()
-    console.log(products)
-    response.status(200).send({ inventory: inventory, products: products })
+    const inventory = await Inventory.query().with('products').where('user_id', auth.user.id).fetch()
+    response.status(200).send({ inventory: inventory })
   }
 
   async store ({ response, auth, request }) {

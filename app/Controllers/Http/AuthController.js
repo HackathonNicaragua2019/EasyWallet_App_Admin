@@ -21,7 +21,7 @@ class AuthController {
 	}
 
 	async login ( { request, auth, response } ) {
-		await Validator.validateData(request.all(), User.getValidationRules())
+		await Validator.validateData(request.all(), User.getLoginValidationRules())
 		if (!Validator.isValidated()) {
 			response.status(422).send(Validator.getValidationMessage())
 		}
