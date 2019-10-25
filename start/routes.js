@@ -54,7 +54,7 @@ Route.group(() => {
   // Searching routes
 
   // Search product
-  Route.post('/search/product/', 'ProductController.searchByName')
+  Route.post('/search/product/', 'ProductController.searchByName').middleware('owner')
   
 
 

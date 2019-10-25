@@ -15,7 +15,7 @@ class ProductController {
 
   async show ({ response, params }) {
     const product = await Product.query()
-      .with('categories')
+      .with('category')
       .with('inventories')
       .where('id' , params.productId).fetch()
     response.status(200).send({ product: product })
@@ -54,12 +54,13 @@ class ProductController {
     response.status(204).send('Destroyed')
   }
 
-  async searchByName ({ response, request }) {
+  async searchByName ({ response, request, auth }) {
     let productName = request.input('productName')
     console.log(productName)
     if (productName) {
       // Search product by name, matching possibilities
-      let products = await Product.query().whereRaw(`name like '${productName}%'`).fetch()
+      let products = await Product.query().whereRaw(
+        `name like '${productName}%' and user_id = '${auth.user.id}'`).fetch()
       products = products.toJSON()
       if (products.length > 0) {
         response.status(200).send(products)
