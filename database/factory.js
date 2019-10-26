@@ -21,6 +21,7 @@ Factory.blueprint('App/Models/User', async (faker) => {
   return {
     username: faker.username(),
     email: faker.email(),
+    role_id: 1,
     password: await Hash.make('default123')
   }
 })

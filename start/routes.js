@@ -43,7 +43,7 @@ Route.group(() => {
   Route.delete('/product/:productId', 'ProductController.delete').middleware('owner')
 
   // Inventories
-  Route.get('/inventory/:inventoryId', 'InventoryController.show').middleware('owner')
+  Route.get('/inventory/:inventoryId', 'InventoryController.show').middleware('owner', 'guard: inventory.read')
   Route.get('/inventories', 'InventoryController.index')
   Route.post('/inventory', 'InventoryController.store')
   // Assing Product to inventory

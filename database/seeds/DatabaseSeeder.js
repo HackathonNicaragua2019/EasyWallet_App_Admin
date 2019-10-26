@@ -17,9 +17,43 @@ const Factory = use('Factory')
 class DatabaseSeeder {
   async run () {
 
+    // Roles
+
+    const Role = use('Cerberus/Models/Role')
+    let ownerRole = await Role.create({
+      name: 'Business Owner',
+      slug: 'owner'
+    })
+    
+    let employerRole = await Role.create({
+      name: 'Business Employer',
+      slug: 'employer'
+    })
+
+    // Resourcers
+    
+    const Resource = use('Cerberus/Models/Resource')
+    
+    let inventoryResource = await Resource.create({
+      name: 'Inventory',
+      slug: 'inventory'
+    })
+
+    // Permissions
+
+    const Permission = use('Cerberus/Models/Permission')
+
+    await Permission.create({
+      role_id: ownerRole.id,
+      resource_id: inventoryResource.id,
+      create: true,
+      read: true,
+      update: true,
+      delete: true
+    })
+    
     // User
     const user_1 = await Factory.model('App/Models/User').create()
-
     // Categories
     const category_1 = await Factory.model('App/Models/Category').create()
     const category_2 = await Factory.model('App/Models/Category').create()
@@ -51,16 +85,7 @@ class DatabaseSeeder {
 
     const inventory = await Factory.model('App/Models/Inventory').create()
     user_1.inventories().save(inventory)
-    // inventory.products().save(product_1)
-
-    
-    
-
-    
-
-    
-    
-
+    // inventory.products().save(product_1)    
   }
 }
 

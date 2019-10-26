@@ -20,6 +20,7 @@ class User extends Model {
     const rules = {
       name: 'required',
       email: 'required|email',
+      role_id: 'required',
       password: 'required|min:6'
     }
     return rules
@@ -28,6 +29,8 @@ class User extends Model {
   static boot () {
     super.boot()
 
+    this.addTrait('@provider:Cerberus/Traits/Role')
+    this.addTrait('@provider:Cerberus/Traits/Permission')
     /**
      * A hook to hash the user password before saving
      * it to the database.
