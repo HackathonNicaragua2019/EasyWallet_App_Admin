@@ -48,10 +48,9 @@ class OwnerDetector {
   async handle ({ auth, response, request, params }, next) {
     try {
       const user = await auth.getUser()
-      if (params.username){      
-        console.log(user.username)
+      if (params.username){
         if (params.username != user.username) {
-          response.status(404).send('You are not owner')
+          return response.status(404).send('You are not owner')
         }
         else {
           await next()
@@ -65,7 +64,7 @@ class OwnerDetector {
           await next()
         }
         else {
-          response.status(404).send('You are not owner')
+          return response.status(404).send('You are not owner')
         }
       }
       
@@ -74,7 +73,7 @@ class OwnerDetector {
           await next()
         }
         else {
-          response.status(404).send('You are not owner')
+          return response.status(404).send('You are not owner')
         }
       }
 
@@ -83,14 +82,14 @@ class OwnerDetector {
           await next()
         }
         else {
-          response.status(404).send('You are not owner')
+          return response.status(404).send('You are not owner')
         }
       }
 
     }
     catch (e) {
         console.log(e)
-        response.status(404).send('Forbidden, not allowed')
+        return response.status(404).send('Forbidden, not allowed')
     }
   }
 }
