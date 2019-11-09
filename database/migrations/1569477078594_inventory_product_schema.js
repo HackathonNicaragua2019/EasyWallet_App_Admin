@@ -8,9 +8,9 @@ class InventoryProductSchema extends Schema {
     this.create('inventory_product', (table) => {
       table.decimal('purchase_price').notNullable()
       table.decimal('sale_price').notNullable()
-      table.integer('inventory_id').unsigned().index('inventory_id')
+      table.integer('inventory_id').unsigned()
       table.foreign('inventory_id').references('inventories.id')
-      table.integer('product_id').unsigned().index('product_id')
+      table.integer('product_id').unsigned()
       table.foreign('product_id').references('products.id')
       table.increments()
       table.timestamps()

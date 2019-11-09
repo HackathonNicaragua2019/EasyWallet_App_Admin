@@ -7,7 +7,7 @@ class ProductNoteSchema extends Schema {
   up () {
     this.create('product_notes', (table) => {
       table.string('note').notNullable()
-      table.integer('product_id').unsigned().index('product_id')
+      table.integer('product_id').unsigned()
       table.foreign('product_id').references('id').inTable('products').onDelete('cascade')
       table.increments()
       table.timestamps()
