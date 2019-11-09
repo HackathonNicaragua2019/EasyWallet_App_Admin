@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Http server
+| Http server for Adonis
 |--------------------------------------------------------------------------
 |
 | This file bootstraps Adonisjs to start the HTTP server. You are free to
