@@ -17,6 +17,7 @@ class UserSchema extends Schema {
 
   down () {
     this.alter('users', (table) => {
+      table.dropForeign('role_id', 'users_role_id_foreign')
       table.dropColumn('role_id')
     })
   }

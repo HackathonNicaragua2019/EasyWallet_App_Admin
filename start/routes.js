@@ -24,10 +24,18 @@ Route.get('/', () => {
 Route.group(() => {
   Route.post('/register', 'AuthController.register')
   Route.post('/login', 'AuthController.login')
+  Route.post('/role', 'AuthController.createRole')
 }).prefix('/auth')
 
 
 Route.group(() => {
+  // Business
+  Route.get('/businesses', 'BusinessController.index')
+  Route.get('/business/:businessId', 'BusinessController.show')
+  Route.post('/business', 'BusinessController.store')
+  Route.put('/business/:businessId', 'BusinessController.update')
+  Route.delete('/business/:businessId', 'BusinessController.delete')
+
   // Categories
   Route.get('/categories', 'CategoryController.index')
   Route.get('/category/:categoryId', 'CategoryController.show')
@@ -36,20 +44,20 @@ Route.group(() => {
   Route.delete('/category/:categoryId', 'CategoryController.delete')
 
   // Products
-  Route.get('/product/:productId', 'ProductController.show').middleware('owner')
+  Route.get('/product/:productId', 'ProductController.show').middleware('productOwner')
   Route.get('/products', 'ProductController.index')
-  Route.post('/product/', 'ProductController.store')
-  Route.put('/product/:productId', 'ProductController.update').middleware('owner')
-  Route.delete('/product/:productId', 'ProductController.delete').middleware('owner')
+  Route.post('/product/', 'ProductController.store').middleware('productOwner')
+  Route.put('/product/:productId', 'ProductController.update').middleware('productOwner')
+  Route.delete('/product/:productId', 'ProductController.delete').middleware('productOwner')
 
-  // Inventories
-  Route.get('/inventory/:inventoryId', 'InventoryController.show').middleware('owner', 'guard: inventory.read')
+  // Inventories, prefix -> 'businessId'
+  Route.get('/inventory/:inventoryId', 'InventoryController.show').middleware('guard: inventory.read')
   Route.get('/inventories', 'InventoryController.index')
-  Route.post('/inventory', 'InventoryController.store')
+  Route.post('/inventory', 'InventoryController.store').middleware('businessOwner')
   // Assing Product to inventory
-  Route.post('/inventory/:inventoryId/product/:productId', 'InventoryController.addProduct').middleware('owner')
+  Route.post('/inventory/:inventoryId/product/:productId', 'InventoryController.addProduct').middleware('inventoryOwner', 'productOwner')
   // Update existing product in inventory
-  Route.put('/inventory/:inventoryId/product/:producctId', 'InventoryController.updateProduct').middleware('owner')
+  Route.put('/inventory/:inventoryId/product/:producctId', 'InventoryController.updateProduct')
 
   // Searching routes
 
@@ -58,4 +66,4 @@ Route.group(() => {
   
 
 
-}).prefix('/:username').middleware('auth', 'owner')
+}).prefix('/:username').middleware('auth')
