@@ -46,12 +46,12 @@ Route.group(() => {
   // Products
   Route.get('/product/:productId', 'ProductController.show').middleware('productOwner')
   Route.get('/products', 'ProductController.index')
-  Route.post('/product/', 'ProductController.store').middleware('productOwner')
+  Route.post('/product/', 'ProductController.store')
   Route.put('/product/:productId', 'ProductController.update').middleware('productOwner')
   Route.delete('/product/:productId', 'ProductController.delete').middleware('productOwner')
 
   // Inventories, prefix -> 'businessId'
-  Route.get('/inventory/:inventoryId', 'InventoryController.show').middleware('guard: inventory.read')
+  Route.get('/inventory/:inventoryId', 'InventoryController.show')
   Route.get('/inventories', 'InventoryController.index')
   Route.post('/inventory', 'InventoryController.store').middleware('businessOwner')
   // Assing Product to inventory

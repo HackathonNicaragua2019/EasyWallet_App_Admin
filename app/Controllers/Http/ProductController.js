@@ -22,7 +22,6 @@ class ProductController {
   }
 
   async store ({ response, request, auth }) {
-    console.log(request.all())
     await Validator.validateData(request.all(), Product.getValidationRules())
     if (!Validator.isValidated()) {
       return response.status(422).send(Validator.getValidationMessage())

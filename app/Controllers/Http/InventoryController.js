@@ -15,7 +15,7 @@ class InventoryController {
   }
 
   async show ({ response, auth, params }) { // In progress
-    const inventory = await auth.user.inventories().query().where('id', params.inventoryId).fetch()
+    const inventory = await auth.user.inventories().where('inventories.id', params.inventoryId).with('products').fetch()
     response.status(200).send({ inventory: inventory })
   }
 
