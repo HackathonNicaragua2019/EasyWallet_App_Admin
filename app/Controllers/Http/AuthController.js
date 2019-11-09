@@ -2,9 +2,19 @@
 
 const User = use('App/Models/User')
 
+const Role = use('App/Models/Role')
+
 const Validator = use('App/Helpers/Validator')
 
 class AuthController {
+
+  async createRole ( { request, response } ) {
+    let role = new Role()
+    role.name = request.input('name')
+    role.slug = request.input('slug')
+    await role.save()
+    response.status(201).send(role)
+  }
 
 	async register ( { request, auth, response } ) {
 		await Validator.validateData(request.all(), User.getValidationRules())

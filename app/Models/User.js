@@ -60,8 +60,12 @@ class User extends Model {
     return this.hasMany('App/Models/Product')
   }
 
+  business () {
+    return this.hasMany('App/Models/Business')
+  }
+
   inventories () {
-    return this.hasMany('App/Models/Inventory')
+    return this.manyThrough('App/Models/Business', 'inventories')
   }
 }
 

@@ -6,12 +6,12 @@ const Validator = use('App/Helpers/Validator')
 
 class CategoryController {
     
-    async index ( { response } ) {
-        const categories =  await Category.all()
+    async index ({ response }) {
+        const categories = await Category.all()
         response.send(categories)
     }
 
-    async show ( { response, params } ) {
+    async show ({ response, params }) {
         const category = await Category.findOrFail(params.categoryId)
         response.status(200).send(category)
     }
@@ -28,7 +28,7 @@ class CategoryController {
         response.status(201).send(category)
     }
 
-    async update ( { response, request, params } ) {
+    async update ({ response, request, params }) {
         await Validator.validateData(request.all(), Category.getValidationRules())
         if (!Validator.isValidated()) {
             return response.status(422).send(Validator.getValidationMessage())
@@ -40,7 +40,7 @@ class CategoryController {
         response.status(200).send(category)
     }
 
-    async delete ( { response, params } ) {
+    async delete ({ response, params }) {
         const category = await Category.findOrFail(params.categoryId)
         await category.delete()
         response.status(204).send('Destroyed')

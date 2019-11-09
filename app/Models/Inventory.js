@@ -12,14 +12,15 @@ class Inventory extends Model {
     return this.belongsToMany('App/Models/Product').pivotTable('inventory_product')
   }
 
-  user () {
-    this.belongsTo(User)
+  business () {
+    this.belongsTo('App/Models/Business')
   }
 
   static getValidationRules () {
     const rules = {
       name: 'required',
-      description: 'required'
+      description: 'required',
+      business_id: 'required'
     }
     return rules
   }
