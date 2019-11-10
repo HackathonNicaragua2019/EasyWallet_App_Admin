@@ -12,7 +12,7 @@ class InventoryProductSchema extends Schema {
       table.foreign('inventory_id').references('inventories.id')
       table.integer('product_id').unsigned()
       table.foreign('product_id').references('products.id')
-      table.increments()
+      // table.increments()
       table.timestamps()
     })
   }

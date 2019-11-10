@@ -17,8 +17,10 @@ class InventoryProduct extends Model {
   static getValidationRules () {
     const rules = {
       purchase_price: 'required|float',
-      sale_price: 'required|float'
+      sale_price: 'required|float',
+      inStock: 'required|number'
     }
+    return rules
   }
 
   products () {
