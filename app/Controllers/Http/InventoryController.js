@@ -41,6 +41,7 @@ class InventoryController {
     const assignment = new InventoryProduct()
     assignment.purchase_price = request.input('purchase_price')
     assignment.sale_price = request.input('sale_price')
+    assignment.inStock = request.input('inStock')
     assignment.inventory_id = params.inventoryId
     assignment.product_id = params.productId
     await assignment.save()
