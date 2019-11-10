@@ -16,6 +16,7 @@ class User extends Model {
     }
     return rules
   }
+  
   static getValidationRules () {
     const rules = {
       name: 'required',
@@ -62,6 +63,10 @@ class User extends Model {
 
   business () {
     return this.hasMany('App/Models/Business')
+  }
+
+  profile () {
+    return this.hasOne('App/Models/Profile')
   }
 
   inventories () {

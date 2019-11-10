@@ -36,6 +36,11 @@ Route.group(() => {
   Route.put('/business/:businessId', 'BusinessController.update')
   Route.delete('/business/:businessId', 'BusinessController.delete')
 
+  // Profiles
+  Route.get('/profile/', 'ProfileController.show')
+  Route.post('/profile/', 'ProfileController.store')
+  Route.put('/profile/', 'ProfileController.update')
+
   // Categories
   Route.get('/categories', 'CategoryController.index')
   Route.get('/category/:categoryId', 'CategoryController.show')
